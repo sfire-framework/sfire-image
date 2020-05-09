@@ -1,0 +1,34 @@
+{
+    "name": "sfire-framework/sfire-image",
+    "description": "Apply filters, crop, resize, flip and determine colors in images.",
+    "keywords": [
+        "framework",
+        "sfire",
+        "images",
+        "crop",
+        "filter",
+        "resize",
+        "flip",
+        "colors"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Kris Kuiper",
+            "email": "kris@sfire.io"
+        }
+    ],
+    "require-dev": {
+        "phpunit/phpunit": "^8"
+    },
+    "require": {
+        "php": ">=7.4",
+        "ext-exif": "*",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "sFire\\Image\\": "./src/"
+        }
+    }
+}
