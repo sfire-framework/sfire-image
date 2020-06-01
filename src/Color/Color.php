@@ -6,7 +6,9 @@
  * @copyright Copyright (c) 2014-2020 sFire Framework.
  * @license   http://sfire.io/license BSD 3-CLAUSE LICENSE
  */
- 
+
+declare(strict_types=1);
+
 namespace sFire\Image\Color;
 
 use sFire\Image\Exception\InvalidArgumentException;
