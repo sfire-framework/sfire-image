@@ -22,11 +22,11 @@ use stdClass;
 class Color {
 
 
-	/**
-	 * Contains a list of colors
-	 * @var array
-	 */
-	private static array $list = [];
+    /**
+     * Contains a list of colors
+     * @var array
+     */
+    private static array $list = [];
 
 
     /**
@@ -34,44 +34,44 @@ class Color {
      * @param string $color A hexadecimal color
      * @return null|stdClass
      */
-	public static function name(string $color): ?stdClass {
+    public static function name(string $color): ?stdClass {
 
-		$color  = strtoupper(ltrim($color, '#'));
-		$rgb 	= static :: hexToRgb($color);
-		$r 		= $rgb -> r; 
-		$g 		= $rgb -> g; 
-		$b 		= $rgb -> b;
-		$hsl 	= static :: hexToHsl($color);
-		$h 		= $hsl -> h; 
-		$s 		= $hsl -> s; 
-		$l 		= $hsl -> l;
-		$cl 	= -1;
-		$df 	= -1;
+        $color  = strtoupper(ltrim($color, '#'));
+        $rgb 	= static :: hexToRgb($color);
+        $r 		= $rgb -> r;
+        $g 		= $rgb -> g;
+        $b 		= $rgb -> b;
+        $hsl 	= static :: hexToHsl($color);
+        $h 		= $hsl -> h;
+        $s 		= $hsl -> s;
+        $l 		= $hsl -> l;
+        $cl 	= -1;
+        $df 	= -1;
 
-		//Index all the colors
-		if(null === static::$list) {
-			static :: index();
-		}
+        //Index all the colors
+        if(null === static::$list) {
+            static :: index();
+        }
 
-		foreach(static::$list as $hex => $color) {
+        foreach(static::$list as $hex => $color) {
 
-			$ndf1 = pow($r - $color -> r, 2) + pow($g - $color -> g, 2) + pow($b - $color -> b, 2);
-			$ndf2 = pow($h - $color -> h, 2) + pow($s - $color -> s, 2) + pow($l - $color -> l, 2);
-			$ndf  = $ndf1 + $ndf2 * 2;
+            $ndf1 = pow($r - $color -> r, 2) + pow($g - $color -> g, 2) + pow($b - $color -> b, 2);
+            $ndf2 = pow($h - $color -> h, 2) + pow($s - $color -> s, 2) + pow($l - $color -> l, 2);
+            $ndf  = $ndf1 + $ndf2 * 2;
 
-			if($df < 0 || $df > $ndf) {
+            if($df < 0 || $df > $ndf) {
 
-				$df = $ndf;
-				$cl = $hex;
-			}
-		}
+                $df = $ndf;
+                $cl = $hex;
+            }
+        }
 
-		if(true === isset(static::$list[$cl])) {
-			return static::$list[$cl];
-		}
+        if(true === isset(static::$list[$cl])) {
+            return static::$list[$cl];
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 
     /**
@@ -80,23 +80,23 @@ class Color {
      * @return stdClass
      * @throws InvalidArgumentException
      */
-	public static function hexToRgb(string $color): stdClass {
+    public static function hexToRgb(string $color): stdClass {
 
-		$color = strtoupper(ltrim($color, '#'));
+        $color = strtoupper(ltrim($color, '#'));
 
-		if(1 !== preg_match('#^[0-9a-fA-F]{6}$#', $color)) {
-			throw new InvalidArgumentException(sprintf('Argument 1 passed to %s() must be a 6 character hexadecimal string, "%s" given', __METHOD__, $color), E_USER_ERROR);
-		}
+        if(1 !== preg_match('#^[0-9a-fA-F]{6}$#', $color)) {
+            throw new InvalidArgumentException(sprintf('Argument 1 passed to %s() must be a 6 character hexadecimal string, "%s" given', __METHOD__, $color), E_USER_ERROR);
+        }
 
-		list($r, $g, $b) = sscanf($color, "%02x%02x%02x");
+        list($r, $g, $b) = sscanf($color, "%02x%02x%02x");
 
-		return (object) [
-			
-			'r' => $r,
-			'g' => $g,
-			'b' => $b
-		];
-	}
+        return (object) [
+
+            'r' => $r,
+            'g' => $g,
+            'b' => $b
+        ];
+    }
 
 
     /**
@@ -166,11 +166,11 @@ class Color {
      * @param string $color A hexadecimal color with or without leading pound (#)
      * @return stdClass
      */
-	public static function hexToHsl($color): stdClass {
+    public static function hexToHsl($color): stdClass {
 
-	    $rgb = static :: hexToRgb($color);
+        $rgb = static :: hexToRgb($color);
         return static :: rgbToHsl($rgb -> r, $rgb -> g, $rgb -> b);
-	}
+    }
 
 
     /**
@@ -179,7 +179,7 @@ class Color {
      * @return bool
      */
     public static function validateHex(string $content): bool {
-	    return (bool) preg_match('/^#?([A-Fa-f0-9]{6})$/', $content);
+        return (bool) preg_match('/^#?([A-Fa-f0-9]{6})$/', $content);
     }
 
 
@@ -199,40 +199,40 @@ class Color {
      * Initialise all colors
      * @return void
      */
-	private static function index(): void {
+    private static function index(): void {
 
-		$colors = ColorCollection :: getInstance() -> get('colors');
+        $colors = ColorCollection :: getInstance() -> get('colors');
 
-		foreach($colors as $hex => $color) {
+        foreach($colors as $hex => $color) {
 
-			$rgb = static :: hexToRgb($hex);
-		  	$hsl = static :: hexToHsl($hex);
+            $rgb = static :: hexToRgb($hex);
+            $hsl = static :: hexToHsl($hex);
 
-		  	$shade = ColorCollection :: getInstance() -> get(['shades', $color['s']]);
-		  	$base  = ColorCollection :: getInstance() -> get(['base', $shade['b']]);
+            $shade = ColorCollection :: getInstance() -> get(['shades', $color['s']]);
+            $base  = ColorCollection :: getInstance() -> get(['base', $shade['b']]);
 
-			static::$list[$hex] = (object) [
-				
-				'r' => $rgb -> r,
-				'g' => $rgb -> g,
-				'b' => $rgb -> b,
-				'h' => $hsl -> h,
-				's' => $hsl -> s,
-				'l' => $hsl -> l,
-				'hex' => $hex,
-				'title' => $color['t'],
-				'shade' => (object) [
+            static::$list[$hex] = (object) [
 
-					'id' => $color['s'],
-					'hex' => $shade['h']
-				],
-				'base' => (object) [
+                'r' => $rgb -> r,
+                'g' => $rgb -> g,
+                'b' => $rgb -> b,
+                'h' => $hsl -> h,
+                's' => $hsl -> s,
+                'l' => $hsl -> l,
+                'hex' => $hex,
+                'title' => $color['t'],
+                'shade' => (object) [
 
-					'id' => $shade['b'],
-					'hex' => $base['h'],
-					'title' => $base['t']
-				]
-			];
-		}
-	}
+                    'id' => $color['s'],
+                    'hex' => $shade['h']
+                ],
+                'base' => (object) [
+
+                    'id' => $shade['b'],
+                    'hex' => $base['h'],
+                    'title' => $base['t']
+                ]
+            ];
+        }
+    }
 }

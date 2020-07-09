@@ -21,8 +21,6 @@
     ],
     "require": {
         "php": ">=7.4",
-        "ext-exif": "*",
-        "ext-gd": "*",
         "sfire-framework/sfire-store": "1.0.*"
     },
     "require-dev": {
